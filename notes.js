@@ -27,7 +27,7 @@ const dataJSON = JSON.stringify(notes)
    fs.writeFileSync('notes.json', dataJSON)
 }
 
-const loadNotes = function(){
+const loadNotes = () => {
     try {
         const dataBuffer = fs.readFileSync('notes.json')
         const dataJSON = dataBuffer.toString()
@@ -37,9 +37,14 @@ const loadNotes = function(){
     }
 }
 // Craete Remove Command 
-const removeNote = function (title){
-
+const removeNote = (title) => {
+    const notes = loadNotes()
+    const notesToKeep = notes.filter(function(note){
+        return note.title !== title
+    });
+    saveNotes(notesToKeep)
 }
+
 module.exports = {
     getNotes: getNotes,
     addNote: addNote,
